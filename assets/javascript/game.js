@@ -2,7 +2,7 @@
 var AusAnimals = ['kookaburra', 'wombat', 'platypus', 'wallaby', 'echidna', 'quokka', 'dingo', 'bilby', 'crocodile']; 
 //valid characters accepted
 var validLetters = ["a", 'b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-
+var randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
 var wins = 0;
 var losses = 0;
 //holds number of underscores
@@ -21,13 +21,15 @@ var counterCorrGuesses = 0;
 function updateScore(){
     if (updateWin()){ 
         wins++;
-        document.getElementById("win-counter").innerHTML = wins;   
+        document.getElementById("win-counter").innerHTML = wins; 
+        startGame()  
 
 }
-    else (updateLoss());{
+else (updateLoss());{
     
         losses++;
         document.getElementById("loss-conter").innerHTML = losses;
+        startGame()
         
         
 
@@ -36,7 +38,7 @@ function updateScore(){
 
 function updateWin (underscores = lettersinAnim.length){
     
-    reset();
+    startGame();
     //add what happens if the user wins code here
 
     //Make a call to the startGame function here. 
@@ -46,7 +48,7 @@ function updateWin (underscores = lettersinAnim.length){
 
 function updateLoss(guessesL= 0) {
    
-    reset();
+    startGame();
     //add what happens if the user loses code here
 
     //Make a call to the startGame function here.
@@ -57,51 +59,10 @@ function updateLoss(guessesL= 0) {
 
 
 
-function reset() 
-{
-var randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
-console.log('random word: ' + randAnim);
-var lettersinAnim = randAnim.split('');
-underscores = lettersinAnim.length;
-
-wGuesses = [];
-guessesL = 10;
-
-for(var i = 0; i< underscores; i++)
-    {
-        CorrGuessesandUnders.push('_');
-        document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders;
-    }
-document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders.join(" ");
-document.getElementById("guesses-left").innerHTML = guessesL 
-}
 
 
 
-
-//create function to get game started
-document.onkeyup = function gameStart () { 
-//computer chooses word from animal array randomly when prompted by first event listener
-//function determines length of word chosen by computer
-var randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
-console.log('random word: ' + randAnim);
-//splits the randomly chosen word into array of letters
-var lettersinAnim = randAnim.split('');
-//get the number of underscores/word-blanks
-underscores = lettersinAnim.length;
-//change underscore 'Word to Guess' to match word from animal array chosen randomly (id="word-blanks")
-
-//set beginning of game wrong guesses and guesses left
-wGuesses = [];
-guessesL = 10;
-
-for(var i = 0; i< underscores; i++)
-	{
-		CorrGuessesandUnders.push('_');
-		document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders;
-	}
-document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders.join(" ");
-document.getElementById("guesses-left").innerHTML = guessesL
+ 
 
 //get/store input from user
 document.onkeyup = function compareGuess(event)
@@ -113,9 +74,9 @@ document.onkeyup = function compareGuess(event)
          
         for (var j=0; j<randAnim.length; j++) {
             if (randAnim[j] === userGuess) {
-                lettersinAnim[j] = userGuess;
-                document.getElementById("word-blanks").innerHTML = lettersinAnim
-                
+                CorrGuessesandUnders[j] = userGuess;
+                document.getElementById("word-blanks").innerHTML = CorrGuessesandUnders
+                updateScore()
                 
             }}
         }
@@ -131,10 +92,35 @@ document.onkeyup = function compareGuess(event)
           }
 
 
-    }
+          function gameStart () { 
+            //computer chooses word from animal array randomly when prompted by first event listener
+            //function determines length of word chosen by computer
+            var randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
+            console.log('random word: ' + randAnim);
+            //splits the randomly chosen word into array of letters
+            var lettersinAnim = randAnim.split('');
+            //get the number of underscores/word-blanks
+            underscores = lettersinAnim.length;
+            //change underscore 'Word to Guess' to match word from animal array chosen randomly (id="word-blanks")
+            
+            //set beginning of game wrong guesses and guesses left
+            wGuesses = [];
+            guessesL = 10;
+            
+            for(var i = 0; i< underscores; i++)
+            {
+                CorrGuessesandUnders.push('_');
+                document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders;
+              }
+              document.getElementById('word-blanks').innerHTML = CorrGuessesandUnders.join(" ");
+              document.getElementById("guesses-left").innerHTML = guessesL
+          }
+          
+            
 
-    
-   
+            gameStart ();
+
+
     
     
     
