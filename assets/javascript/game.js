@@ -1,15 +1,14 @@
-//create an array of Australian animals
+// this variable creates an array of Australian animals
 var AusAnimals = ['kookaburra', 'wombat', 'platypus', 'wallaby', 'echidna', 'quokka', 'dingo', 'bilby', 'crocodile']; 
-//valid characters accepted
+//this variable is an array of valid characters accepted
 var validLetters = ["a", 'b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+//this will generate a randomly chosen word from the AusAnimals
 var randAnim = ''//AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
 var wins = 0;
 var losses = 0;
-//holds number of underscores
-var underscores = 0;
+// variable for guesses left
 var guessesL = 0;
-var counterCorrGuesses = 0;
-var lettersinAnim = [];
+//these variables hold the user's guesses, wrong guesses get pushed to wGuesses
 var userGuess = [];
 var wGuesses = [];
 //holds underscores and correct guesses
@@ -17,19 +16,13 @@ var CorrGuessesandUnders = [];
 
 
 function gameStart () { 
-    //computer chooses word from animal array randomly when prompted by first event listener
-    //function determines length of word chosen by computer
-    var randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
+    //function chooses word from animal array randomly when prompted by first event listener
+    //function determines length of word chosen 
+    randAnim = AusAnimals [Math.floor(Math.random() * AusAnimals.length)];
     console.log('random word: ' + randAnim);
-    //splits the randomly chosen word into array of letters
-    //var lettersinAnim = randAnim.split('');
-    //get the number of underscores/word-blanks
-    //underscores = lettersinAnim.length;
-   //console.log(lettersinAnim)
-   //console.log(underscores)
-    //change underscore 'Word to Guess' to match word from animal array chosen randomly (id="word-blanks")
     
-    //set beginning of game wrong guesses and guesses left
+    
+    //set beginning of game wrong guesses (starts empty) and guesses left (counts down from ten)
     wGuesses = [];
     guessesL = 10;
     CorrGuessesandUnders = [];
@@ -60,7 +53,7 @@ function validateInput(userGuess) {
 
     // This condition Makes sure hangman keys cant be pressed again
     // makes sure that any indexOf value that is 0  and above (example 0=a, 1=b...) does not get used again. 
-    if(randAnim.indexOf(userGuess) >= 0) return false;
+    if(CorrGuessesandUnders.indexOf(userGuess) >= 0) return false;
     return true;
 }
 
@@ -99,7 +92,7 @@ document.onkeyup = function compareGuess(event) {
     console.log (userGuess)
     
     if (validateInput(userGuess)) {
-        //this whole second if statement is not working; all letters being passed to else and printed as wrong guesses 
+       
         if (randAnim.indexOf(userGuess) > -1) {
             for (var j = 0; j < randAnim.length; j++) {
                 if (randAnim[j] === userGuess) {
